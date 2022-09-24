@@ -77,7 +77,7 @@
 defineProps({
   slcSexo: {
     type: String,
-    required: false,
+    required: true,
   },
   slcEstadoCivil: {
     type: String,
@@ -91,6 +91,10 @@ defineProps({
     type: String,
     required: false,
   },
+  showModal: {
+    type: Boolean,
+    required: false,
+  }
 });
 </script>
 
@@ -259,8 +263,18 @@ defineProps({
               </div>
             </div>
 
+            <transition name="fade">
+              <div class="modal-overlay" v-if="showModal"></div>
+            </transition>
+            <transition name="fade">
+              <div class="modal-child" v-if="showModal">
+                <h5 class="text-center mb-4">Registro de asociado</h5>
+                <p>El asociado ha sido registrado con exito</p>
+                <input value="Cerrar" class="btn btn-danger col-4 text-center" @click="showModal=false">
+              </div>
+            </transition>
             <div>
-              <button class="btn btn-danger" type="submit">Registrar</button>
+              <input type="button" value="Registrar" class="btn btn-success" @click="showModal=true">
             </div>
           </form>
         </div>
@@ -270,6 +284,28 @@ defineProps({
 </template>
 
 <style>
+.modal-overlay{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.2);
+}
+.modal-child{
+  position: fixed;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%,-50%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.04);
+  z-index: 101;
+}
+
+
 /* ==========================================================================
    #FONT
    ========================================================================== */
