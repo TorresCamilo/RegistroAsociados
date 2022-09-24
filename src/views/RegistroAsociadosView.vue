@@ -73,8 +73,25 @@
     </section>
   </main>
 </template> -->
-<script>
-  const slcSexo='';
+<script setup>
+defineProps({
+  slcSexo: {
+    type: String,
+    required: false,
+  },
+  slcEstadoCivil: {
+    type: String,
+    required: false,
+  },
+  rdbHijos: {
+    type: String,
+    required: false,
+  },
+  rdbTrabaja: {
+    type: String,
+    required: false,
+  },
+});
 </script>
 
 <template>
@@ -92,7 +109,11 @@
                 <div class="row row-space">
                   <div>
                     <div class="input-group-desc">
-                      <input class="input--style-5" type="text" name="nombre" />
+                      <input
+                        class="input--style-5"
+                        type="text"
+                        name="nombre"
+                      />
                       <label class="label--desc">Nombre completo</label>
                     </div>
                   </div>
@@ -132,7 +153,7 @@
                     </div>
                   </div>
                   <div class="col-7">
-                    <div class="input-group-desc" v-if="slcSexo==='O'">
+                    <div class="input-group-desc" v-if="slcSexo === 'O'">
                       <input class="input--style-5" type="text" name="sexo" />
                       <label class="label--desc">Defina su sexo</label>
                     </div>
@@ -162,7 +183,7 @@
                       <div
                         class="rs-select2 js-select-simple select--no-search"
                       >
-                        <select name="select" class="form-select">
+                        <select name="slcEstadoCivil" class="form-select" v-model="slcEstadoCivil">
                           <option disabled selected>Escoge una opcion</option>
                           <option>Soltero</option>
                           <option>Union libre</option>
@@ -173,8 +194,8 @@
                     </div>
                   </div>
                   <div class="col-7">
-                    <div class="input-group-desc">
-                      <input class="input--style-5" type="text" name="sexo" />
+                    <div class="input-group-desc" v-if="slcEstadoCivil==='Casado'">
+                      <input class="input--style-5" type="text" name="sexo"/>
                       <label class="label--desc">Nombre de su conyugue</label>
                     </div>
                   </div>
@@ -189,18 +210,18 @@
                     <div class="p-t-15">
                       <label class="radio-container m-r-55"
                         >Si
-                        <input type="radio" checked name="hijos" />
+                        <input type="radio" name="hijos" value="S" v-model="rdbHijos" />
                         <span class="checkmark"></span>
                       </label>
                       <label class="radio-container"
                         >No
-                        <input type="radio" name="hijos" />
+                        <input type="radio" name="hijos" value="N" v-model="rdbHijos" />
                         <span class="checkmark"></span>
                       </label>
                     </div>
                   </div>
                   <div class="col-7">
-                    <div class="input-group-desc">
+                    <div class="input-group-desc" v-if="rdbHijos==='S'">
                       <input class="input--style-5" type="text" name="sexo" />
                       <label class="label--desc">Numero de hijos</label>
                     </div>
@@ -216,20 +237,22 @@
                     <div class="p-t-15">
                       <label class="radio-container m-r-55"
                         >Si
-                        <input type="radio" checked name="trabaja" />
+                        <input type="radio" name="trabaja" value="S" v-model="rdbTrabaja"/>
                         <span class="checkmark"></span>
                       </label>
                       <label class="radio-container"
                         >No
-                        <input type="radio" name="trabaja" />
+                        <input type="radio" name="trabaja" value="N" v-model="rdbTrabaja"/>
                         <span class="checkmark"></span>
                       </label>
                     </div>
                   </div>
                   <div class="col-7">
-                    <div class="input-group-desc">
+                    <div class="input-group-desc" v-if="rdbTrabaja==='S'">
                       <input class="input--style-5" type="text" name="sexo" />
-                      <label class="label--desc">Nombre de la empresa donde labora</label>
+                      <label class="label--desc"
+                        >Nombre de la empresa donde labora</label
+                      >
                     </div>
                   </div>
                 </div>
@@ -237,9 +260,7 @@
             </div>
 
             <div>
-              <button class="btn btn-danger" type="submit">
-                Registrar
-              </button>
+              <button class="btn btn-danger" type="submit">Registrar</button>
             </div>
           </form>
         </div>
