@@ -1,101 +1,50 @@
-<!-- <template>
-  <main>
-    <header>
-      <h1>Registro de Asociados</h1>
-    </header>
-    <section>
-      <article class="content">
-        <p>Por favor ingrese la siguiente informacion :</p>
-        <form>
-          <div class="row">
-            <label for="documento">Numero de documento : </label>
-            <input id="documento" type="number" />
-          </div>
-          <div class="row">
-            <label for="nombre">Nombre completo : </label>
-            <input id="nombre" type="text" />
-          </div>
-          <div class="row">
-            <label for="cmbSexo">Sexo : </label>
-            <select name="cmbSexo" id="cmbSexo">
-              <option value="F">Femenino</option>
-              <option value="M">Masculino</option>
-              <option value="O">Otro</option>
-            </select>
-          </div>
-          <div class="row">
-            <label for="sexo">Defina su sexo : </label>
-            <input id="sexo" type="text" />
-          </div>
-          <div class="row">
-            <label for="fechaNacimiento">Fecha nacimiento : </label>
-            <input id="fechaNacimiento" type="date" />
-          </div>
-          <div class="row">
-            <label for="estadoCivil">Estado civil : </label>
-            <select name="estadoCivil" id="estadoCivil">
-              <option value="Casado">Casado</option>
-              <option value="Soltero">Soltero</option>
-              <option value="Union libre">Union libre</option>
-            </select>
-          </div>
-          <div class="row">
-            <label for="conyugue">Nombre de su conyugue : </label>
-            <input id="conyugue" type="text" />
-          </div>
-          <div class="row">
-            <label for="tieneHijos">¿Tiene hijos? : </label>
-            <select name="tieneHijos" id="tieneHijos">
-              <option value="S">Si</option>
-              <option value="N">No</option>
-            </select>
-          </div>
-          <div class="row">
-            <label for="nmbHijos">Numero de hijos : </label>
-            <input id="nmbHijos" type="number" />
-          </div>
-          <div class="row">
-            <label for="tieneTrabajo">¿Actualmente trabaja? : </label>
-            <select name="tieneTrabajo" id="tieneTrabajo">
-              <option value="S">Si</option>
-              <option value="N">No</option>
-            </select>
-          </div>
-          <div class="row">
-            <label for="nombreEmpresa">Nombre de la empresa : </label>
-            <input id="nombreEmpresa" type="text" />
-          </div>
-          <div class="row">
-            <button id="btnRegistrar" type="button">Registrar</button>
-          </div>
-        </form>
-      </article>
-    </section>
-  </main>
-</template> -->
-<script setup>
-defineProps({
-  slcSexo: {
-    type: String,
-    required: true,
+<script>
+// defineProps({
+//   slcSexo: {
+//     type: String,
+//     required: true,
+//   },
+//   slcEstadoCivil: {
+//     type: String,
+//     required: false,
+//   },
+//   rdbHijos: {
+//     type: String,
+//     required: false,
+//   },
+//   rdbTrabaja: {
+//     type: String,
+//     required: false,
+//   },
+//   showModal: {
+//     type: Boolean,
+//     required: false,
+//   },
+// });
+export default {
+  data: () => ({
+    txtNombre: '',
+    txtIdentificacion: 0,
+
+    slcSexo: '',
+    slcEstadoCivil: '',
+    rdbHijos: '',
+    rdbTrabaja: '',
+    showModal: false,
+    msg: '',
+
+  }),
+  methods: {
+    onSubmit() {
+      this.showModal = true;
+      if(this.txtIdentificacion==='' || this.txtNombre===''){
+        this.msg= "No se pudo guardar la informacion. Complete todos los campos."
+      }else{
+        this.msg = "Se guardaron los datos exitosamente."
+      }
+    },
   },
-  slcEstadoCivil: {
-    type: String,
-    required: false,
-  },
-  rdbHijos: {
-    type: String,
-    required: false,
-  },
-  rdbTrabaja: {
-    type: String,
-    required: false,
-  },
-  showModal: {
-    type: Boolean,
-    required: false,
-  }
-});
+};
 </script>
 
 <template>
@@ -113,11 +62,7 @@ defineProps({
                 <div class="row row-space">
                   <div>
                     <div class="input-group-desc">
-                      <input
-                        class="input--style-5"
-                        type="text"
-                        name="nombre"
-                      />
+                      <input class="input--style-5" type="text" name="nombre" v-model="txtNombre" />
                       <label class="label--desc">Nombre completo</label>
                     </div>
                   </div>
@@ -133,6 +78,7 @@ defineProps({
                     type="text"
                     name="nmbIdentificacion"
                     id="nmbIdentificacion"
+                    v-model="txtIdentificacion"
                   />
                 </div>
               </div>
@@ -146,7 +92,11 @@ defineProps({
                       <div
                         class="rs-select2 js-select-simple select--no-search"
                       >
-                        <select name="select" class="form-select" v-model="slcSexo">
+                        <select
+                          name="select"
+                          class="form-select"
+                          v-model="slcSexo"
+                        >
                           <option disabled selected>Escoge una opcion</option>
                           <option value="F">Femenino</option>
                           <option value="M">Masculino</option>
@@ -187,7 +137,11 @@ defineProps({
                       <div
                         class="rs-select2 js-select-simple select--no-search"
                       >
-                        <select name="slcEstadoCivil" class="form-select" v-model="slcEstadoCivil">
+                        <select
+                          name="slcEstadoCivil"
+                          class="form-select"
+                          v-model="slcEstadoCivil"
+                        >
                           <option disabled selected>Escoge una opcion</option>
                           <option>Soltero</option>
                           <option>Union libre</option>
@@ -198,8 +152,11 @@ defineProps({
                     </div>
                   </div>
                   <div class="col-7">
-                    <div class="input-group-desc" v-if="slcEstadoCivil==='Casado'">
-                      <input class="input--style-5" type="text" name="sexo"/>
+                    <div
+                      class="input-group-desc"
+                      v-if="slcEstadoCivil === 'Casado'"
+                    >
+                      <input class="input--style-5" type="text" name="sexo" />
                       <label class="label--desc">Nombre de su conyugue</label>
                     </div>
                   </div>
@@ -214,18 +171,28 @@ defineProps({
                     <div class="p-t-15">
                       <label class="radio-container m-r-55"
                         >Si
-                        <input type="radio" name="hijos" value="S" v-model="rdbHijos" />
+                        <input
+                          type="radio"
+                          name="hijos"
+                          value="S"
+                          v-model="rdbHijos"
+                        />
                         <span class="checkmark"></span>
                       </label>
                       <label class="radio-container"
                         >No
-                        <input type="radio" name="hijos" value="N" v-model="rdbHijos" />
+                        <input
+                          type="radio"
+                          name="hijos"
+                          value="N"
+                          v-model="rdbHijos"
+                        />
                         <span class="checkmark"></span>
                       </label>
                     </div>
                   </div>
                   <div class="col-7">
-                    <div class="input-group-desc" v-if="rdbHijos==='S'">
+                    <div class="input-group-desc" v-if="rdbHijos === 'S'">
                       <input class="input--style-5" type="text" name="sexo" />
                       <label class="label--desc">Numero de hijos</label>
                     </div>
@@ -241,18 +208,28 @@ defineProps({
                     <div class="p-t-15">
                       <label class="radio-container m-r-55"
                         >Si
-                        <input type="radio" name="trabaja" value="S" v-model="rdbTrabaja"/>
+                        <input
+                          type="radio"
+                          name="trabaja"
+                          value="S"
+                          v-model="rdbTrabaja"
+                        />
                         <span class="checkmark"></span>
                       </label>
                       <label class="radio-container"
                         >No
-                        <input type="radio" name="trabaja" value="N" v-model="rdbTrabaja"/>
+                        <input
+                          type="radio"
+                          name="trabaja"
+                          value="N"
+                          v-model="rdbTrabaja"
+                        />
                         <span class="checkmark"></span>
                       </label>
                     </div>
                   </div>
                   <div class="col-7">
-                    <div class="input-group-desc" v-if="rdbTrabaja==='S'">
+                    <div class="input-group-desc" v-if="rdbTrabaja === 'S'">
                       <input class="input--style-5" type="text" name="sexo" />
                       <label class="label--desc"
                         >Nombre de la empresa donde labora</label
@@ -269,12 +246,21 @@ defineProps({
             <transition name="fade">
               <div class="modal-child" v-if="showModal">
                 <h5 class="text-center mb-4">Registro de asociado</h5>
-                <p>El asociado ha sido registrado con exito</p>
-                <input value="Cerrar" class="btn btn-danger col-4 text-center" @click="showModal=false">
+                <p>{{msg}}</p>
+                <input
+                  value="Cerrar"
+                  class="btn btn-danger col-4 text-center"
+                  @click="showModal = false"
+                />
               </div>
             </transition>
             <div>
-              <input type="button" value="Registrar" class="btn btn-success" @click="showModal=true">
+              <input
+                type="button"
+                value="Registrar"
+                class="btn btn-success"
+                @click="onSubmit"
+              />
             </div>
           </form>
         </div>
@@ -284,7 +270,7 @@ defineProps({
 </template>
 
 <style>
-.modal-overlay{
+.modal-overlay {
   position: absolute;
   top: 0;
   right: 0;
@@ -293,18 +279,17 @@ defineProps({
   z-index: 100;
   background: rgba(0, 0, 0, 0.2);
 }
-.modal-child{
+.modal-child {
   position: fixed;
   top: 50%;
   left: 55%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   background: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 3px 3px rgba(0, 0, 0, 0.04);
   z-index: 101;
 }
-
 
 /* ==========================================================================
    #FONT
